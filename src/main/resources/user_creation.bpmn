@@ -5,7 +5,8 @@
       <bpmn:outgoing>Flow_1cryjsr</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_1cryjsr" sourceRef="StartEvent_1" targetRef="Activity_0iuej31" />
-    <bpmn:userTask id="Activity_0iuej31" name="Ask for user name, mail and age" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_0iuej31" name="Demo task A" camunda:assignee="demo">
+      <bpmn:documentation>Please complete this demo task. It triggers a simple service task</bpmn:documentation>
       <bpmn:incoming>Flow_1cryjsr</bpmn:incoming>
       <bpmn:outgoing>Flow_011zopj</bpmn:outgoing>
     </bpmn:userTask>
@@ -19,13 +20,14 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_04eujvp" sourceRef="Activity_1l522cv" targetRef="Activity_0de9zwf" />
     <bpmn:sequenceFlow id="Flow_045q9id" sourceRef="Activity_0de9zwf" targetRef="Event_03e7m9u" />
-    <bpmn:userTask id="Activity_0de9zwf" name="Confirm user is created correctly" camunda:assignee="demo">
+    <bpmn:userTask id="Activity_0de9zwf" name="Demo task B">
+      <bpmn:documentation>This task has to be assigned before you can complete this task</bpmn:documentation>
       <bpmn:incoming>Flow_04eujvp</bpmn:incoming>
       <bpmn:outgoing>Flow_045q9id</bpmn:outgoing>
     </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0y94yqv">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="sacProcess">
       <bpmndi:BPMNEdge id="Flow_045q9id_di" bpmnElement="Flow_045q9id">
         <di:waypoint x="700" y="117" />
         <di:waypoint x="772" y="117" />

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.history.HistoricTaskInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +23,18 @@ import de.ph.sac.controller.dto.SacTask;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @Component
-public class OpenTaskController {
+public class TaskController {
  
     private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
     
     @Autowired
 	private ProcessEngine processEngine;
     
+    @GetMapping("/completedSacTasks")
+    public List<SacTask> getCompletedTasks() {
+        return completedTaskData();
+    }
+
     @GetMapping("/openSacTasks")
     public List<SacTask> getOpenTasks() {
         logger.info("Engine: "+ processEngine);
@@ -44,15 +50,21 @@ public class OpenTaskController {
             return null;
         }
 
-        camundaTasks.forEach(camundaTask -> {
-            SacTask sacTask = new SacTask();
+        camundaTasks.forEach(camundaTask -> tasks.add(new SacTask(camundaTask)));
 
-            sacTask.setId(camundaTask.getId());
-            sacTask.setName(camundaTask.getName());
-            sacTask.setAssignee(camundaTask.getAssignee());
+        return tasks;
+    }
 
-            tasks.add(sacTask);
-        });
+    private List<SacTask> completedTaskData() {
+        
+        List<HistoricTaskInstance> finishedTasks = processEngine.getHistoryService().createHistoricTaskInstanceQuery().finished().list();
+        List <SacTask> tasks = new ArrayList<>();
+
+        if (finishedTasks == null){
+            return null;
+        }
+
+        finishedTasks.forEach(finishedTask -> tasks.add(new SacTask(finishedTask)));
 
         return tasks;
     }
