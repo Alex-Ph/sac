@@ -1,12 +1,19 @@
 package de.ph.sac.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.camunda.bpm.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.ph.sac.controller.dto.CompleteTask;
+import de.ph.sac.controller.dto.Message;
 import de.ph.sac.controller.dto.SacTask;
 
 /**
@@ -20,8 +27,22 @@ public class ManageTaskController {
     private TaskService taskService;
 
     @PostMapping("/completeTask/")
-    public void completeTask(@RequestBody SacTask task) {
-        taskService.complete(task.getId());
+    public ResponseEntity<Object> completeTask(@RequestBody CompleteTask task) {
+        Map<String, Object> varMapping = new HashMap<>();
+
+        if (task.getId() == null || task.getId().isEmpty()){
+            return new ResponseEntity<>(new Message("error.forbidden.no-taskid"),HttpStatus.FORBIDDEN);
+        }
+
+        if (task.getSignature() == null || task.getSignature().isEmpty()){
+            return new ResponseEntity<>(new Message("error.forbidden.no-signature"),HttpStatus.FORBIDDEN);
+        }
+
+        varMapping.put("signature", task.getSignature());
+        
+        taskService.complete(task.getId(), varMapping);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/claimTask")
