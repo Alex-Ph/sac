@@ -3,11 +3,10 @@ package de.ph.sac.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.HistoryService;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.history.HistoricTaskInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,28 +24,27 @@ import de.ph.sac.controller.dto.SacTask;
 @Component
 public class TaskController {
  
-    private Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+    @Autowired
+    private TaskService taskService;
     
     @Autowired
-	private ProcessEngine processEngine;
+    private HistoryService historyService;
     
+    @GetMapping("/openSacTasks")
+    public List<SacTask> getOpenTasks() {
+        return openTaskData();
+    }
+
     @GetMapping("/completedSacTasks")
     public List<SacTask> getCompletedTasks() {
         return completedTaskData();
     }
 
-    @GetMapping("/openSacTasks")
-    public List<SacTask> getOpenTasks() {
-        logger.info("Engine: "+ processEngine);
-
-        return openTaskData();
-    }
-
     private List<SacTask> openTaskData() {
-        List<Task> camundaTasks = processEngine.getTaskService().createTaskQuery().active().list();
-        List <SacTask> tasks = new ArrayList<>();
+        List<Task> camundaTasks = taskService.createTaskQuery().active().list();
+        List<SacTask> tasks = new ArrayList<>();
 
-        if (camundaTasks == null){
+        if (camundaTasks == null) {
             return null;
         }
 
@@ -56,9 +54,10 @@ public class TaskController {
     }
 
     private List<SacTask> completedTaskData() {
-        
-        List<HistoricTaskInstance> finishedTasks = processEngine.getHistoryService().createHistoricTaskInstanceQuery().finished().list();
-        List <SacTask> tasks = new ArrayList<>();
+
+        List<HistoricTaskInstance> finishedTasks = historyService
+                .createHistoricTaskInstanceQuery().finished().list();
+        List<SacTask> tasks = new ArrayList<>();
 
         if (finishedTasks == null){
             return null;

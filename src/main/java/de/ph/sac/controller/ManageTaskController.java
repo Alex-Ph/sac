@@ -38,7 +38,8 @@ public class ManageTaskController {
             return new ResponseEntity<>(new Message("error.forbidden.no-signature"),HttpStatus.FORBIDDEN);
         }
 
-        varMapping.put("signature", task.getSignature());
+        // could be also a list of all signatures, linked somehow or a local variable
+        varMapping.put("latestSignature", task.getSignature());
         
         taskService.complete(task.getId(), varMapping);
 

@@ -6,8 +6,10 @@ sacclient will contain the UI part
 
 ToDos:
 
-- Add authentication and only return tasks user is allowed to claim / complete
 - Add some dummy listener to show function
 - Hook into businessHours logic to test if overloading works
 - Add application testing
 - Add process tests
+
+
+- Add authentication and only return tasks user is allowed to claim / complete
