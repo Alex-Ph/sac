@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/Alex-Ph/sac.svg?branch=master)](https://travis-ci.com/Alex-Ph/sac)
+
 project to learn more about SpringBoot and camunda. Before that I just used and enhanced the dockered wildfly container.
 
 I created the repo sacclient to create dummy data and learn more about Angular :)
@@ -10,6 +12,7 @@ Prototype contains:
 - An Integration test for one controller (more should come later, just want to see how it works for now)
 - An unittest for one controller (more should come later, just want to see how it works for now)
 - Automated test of the provided demo process -> intTest (more should come later, just want to see how it works for now)
+- Travis added (just compile to get an idea how travis works)
 
 ToDos:
 - Check project against provided checkstyle.xml file
