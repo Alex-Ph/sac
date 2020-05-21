@@ -19,3 +19,4 @@ ToDos:
 - Fix integTests execution (atm its triggered also in unittest context)
 - Provide more tests and use a coverage tool
 - Later: Add authentication and only return tasks user is allowed to claim / complete
+- Versioned endpoints
