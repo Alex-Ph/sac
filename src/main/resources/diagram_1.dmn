@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" id="Definitions_10jbke1" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
+  <decision id="Decision_19xlwzt" name="Decision 1">
+    <extensionElements>
+      <biodi:bounds x="150" y="150" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="Signature">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>latestSignature</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Dummy variable" name="dummyVariable" typeRef="string" />
+      <rule id="DecisionRule_1suqwq6">
+        <inputEntry id="UnaryTests_1d28s0q">
+          <text>"alex"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ulwq96">
+          <text>"yeah"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06doele">
+        <inputEntry id="UnaryTests_1hmitw6">
+          <text>"schulz"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0bopbvd">
+          <text>"Nackenklatscher"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
